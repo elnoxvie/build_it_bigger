@@ -1,0 +1,43 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23"
+    defaultConfig {
+        applicationId "com.udacity.gradle.builditbigger"
+        minSdkVersion 10
+        targetSdkVersion 22
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    productFlavors {
+        paid {
+            applicationId 'com.udacity.gradle.builditbigger.paid'
+            resValue 'string', 'banner_ad_unit_id', ''
+            resValue 'string', 'interstitial_ad_unit_id', ''
+        }
+        free {
+            applicationId 'com.udacity.gradle.builditbigger.free'
+            resValue 'string', 'banner_ad_unit_id', 'ca-app-pub-3940256099942544/6300978111'
+            resValue 'string', 'interstitial_ad_unit_id', 'ca-app-pub-2710190775746322/5857508498'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile project(':libraries:joke_provider')
+    compile project(':libraries:joke_preview')
+
+    compile 'com.android.support:appcompat-v7:23.0.1'
+    compile 'com.jakewharton:butterknife:7.0.1'
+    compile project(path: ':backend', configuration: 'android-endpoints')
+
+    freeCompile 'com.google.android.gms:play-services-ads:7.8.0'
+}
